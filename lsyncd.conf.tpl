@@ -14,7 +14,6 @@ sync {
   default.direct,
   source = "{{ $element }}",
   target = "{{ index $destinations $index }}",
-  init = false,
   exclude = { {{ range $i, $exclude := $excludes }}{{ if $i }}, {{end}}"{{ $exclude }}"{{ end }} }
 }
 {{ end }}
