@@ -3,6 +3,10 @@ set -e
 
 if [ "$1" == 'dockerize' ]; then
 
+    # Increase the maximum watches for inotify for very large repositories to be watched
+    # Needs the privilegied docker option
+    [ ! -z $MAXIMUM_INOTIFY_WATCHES ] && echo fs.inotify.max_user_watches=$MAXIMUM_INOTIFY_WATCHES | tee -a /etc/sysctl.conf && sysctl -p || true
+
     # Create a temporary rsync folder for each directory to sync
     IFS=':' read -ra sources <<< "${SOURCES}"
     i=0
