@@ -48,6 +48,37 @@ The app container inits also two aditionnal volumes `/src` and `/output`.
 The lsyncd container is configured to provides a real-time sync between the `/src.mounted` to the `/src` folder and the `/output` to
 the `/ouptut.mounted`.
 
+#### 2-way sync
+
+**Caution! 2-way sync is experimental**
+
+On Windows, this function works under `Docker Desktop v2.2.0.5`.
+
+Related issue : https://github.com/docker/for-win/issues/5955
+```
+version: '3.6'
+
+  web:
+    volumes:
+      - web:/var/www/html
+
+  sync:
+    image: darron1217/docker-lsyncd
+    environment:
+      - SOURCES=/src.mounted:/output
+      - DESTINATIONS=/src:/output.mounted
+      - EXCLUDES=.git:.github:.idea:.composer
+    volumes:
+      - .:/src.mounted
+      - .:/output.mounted
+      - web:/src
+      - web:/output
+
+  volumes:
+    web:
+```
+
+
 ### Configuration
 
 Configuration is done through environment variables:
