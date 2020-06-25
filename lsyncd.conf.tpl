@@ -2,6 +2,7 @@
 {{ $destinations := split .Env.DESTINATIONS ":" }}
 {{ $excludes_env := default .Env.EXCLUDES "" }}
 {{ $excludes := split $excludes_env ":" }}
+{{ $chown := default .Env.CHOWN "" }}
 
 settings {
   nodaemon = true,
@@ -18,6 +19,11 @@ sync {
   exclude = { {{ range $i, $exclude := $excludes }}{{ if $i }}, {{end}}"{{ $exclude }}"{{ end }} },
   delay = 1,
   rsync = {
+    {{ if $chown }}
+    chown = "{{ $chown }}",
+    owner = true,
+    group = true,
+    {{end}}
     temp_dir = "/tmp"
   }
 }
