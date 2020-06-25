@@ -11,9 +11,14 @@ settings {
 
 {{ range $index, $element := $sources }}
 sync {
-  default.direct,
+  default.rsync,
   source = "{{ $element }}",
   target = "{{ index $destinations $index }}",
-  exclude = { {{ range $i, $exclude := $excludes }}{{ if $i }}, {{end}}"{{ $exclude }}"{{ end }} }
+  {{ if $index }}init = false,{{end}}
+  exclude = { {{ range $i, $exclude := $excludes }}{{ if $i }}, {{end}}"{{ $exclude }}"{{ end }} },
+  delay = 1,
+  rsync = {
+    temp_dir = "/tmp"
+  }
 }
 {{ end }}
