@@ -3,6 +3,7 @@
 {{ $excludes_env := default .Env.EXCLUDES "" }}
 {{ $excludes := split $excludes_env ":" }}
 {{ $chown := default .Env.CHOWN "" }}
+{{ $delay := default .Env.DELAY 1 }}
 
 settings {
   nodaemon = true,
@@ -17,7 +18,7 @@ sync {
   target = "{{ index $destinations $index }}",
   {{ if $index }}init = false,{{end}}
   exclude = { {{ range $i, $exclude := $excludes }}{{ if $i }}, {{end}}"{{ $exclude }}"{{ end }} },
-  delay = 1,
+  delay = {{ $delay }},
   rsync = {
     {{ if $chown }}
     chown = "{{ $chown }}",

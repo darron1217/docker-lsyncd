@@ -76,6 +76,7 @@ version: '3.6'
       - DESTINATIONS=/src:/output.mounted
       - EXCLUDES=.git:.github:.idea:.composer:node_modules:/vendor
       - MAXIMUM_INOTIFY_WATCHES=500000
+      - DELAY=3
     volumes:
       - .:/src.mounted
       - .:/output.mounted
@@ -96,6 +97,7 @@ Configuration is done through environment variables:
 - `EXCLUDES` add the ability to add `rsync` exclude patterns.
 - `CHOWN` add the ability to add `rsync` chown config.
 - `MAXIMUM_INOTIFY_WATCHES` add the ability to extend max inotify watchers (`privileged: true` must be set).
+- `DELAY` add the ability to modify sync delay. (Default 1)
 
 Disclaimer
 ----------
