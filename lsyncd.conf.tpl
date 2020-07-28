@@ -3,7 +3,7 @@
 {{ $excludes_env := default .Env.EXCLUDES "" }}
 {{ $excludes := split $excludes_env ":" }}
 {{ $chown := default .Env.CHOWN "" }}
-{{ $delay := default .Env.DELAY 1 }}
+{{ $delay := default .Env.DELAY "1" }}
 
 settings {
   nodaemon = true,
